@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fxl.codes.tumblr", "fxl.codes.tumblr.csproj", "{BDF4DEB9-9D66-4ADC-BB11-218F9231BCA9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BDF4DEB9-9D66-4ADC-BB11-218F9231BCA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDF4DEB9-9D66-4ADC-BB11-218F9231BCA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDF4DEB9-9D66-4ADC-BB11-218F9231BCA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDF4DEB9-9D66-4ADC-BB11-218F9231BCA9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
