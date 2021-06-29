@@ -2,13 +2,14 @@ const path = require('path');
 
 module.exports = [{
     mode: "development",
-    entry: [
-        './Styles/main.scss',
-    ],
+    entry: {
+        main: "./Scripts/main.ts",
+        style: "./Styles/main.scss"
+    },
     output: {
         // This is necessary for webpack to compile
         // But we never use style-bundle.js
-        filename: 'js/style-bundle.js',
+        filename: 'js/[name].js',
         path: path.resolve(__dirname, 'wwwroot'),
     },
     resolve: {

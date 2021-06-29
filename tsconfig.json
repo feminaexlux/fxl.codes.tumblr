@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "moduleResolution": "Node",
     "module": "ES6",
     "noImplicitAny": true,
     "removeComments": true,
