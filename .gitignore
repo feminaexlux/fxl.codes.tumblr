@@ -388,3 +388,5 @@ FodyWeavers.xsd
 *.sln.iml
 
 *.Development.json
+wwwroot/css/*
+wwwroot/js/*
