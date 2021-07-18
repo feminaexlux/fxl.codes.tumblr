@@ -12,10 +12,14 @@
 
     <ItemGroup>
       <PackageReference Include="Dapper" Version="2.0.90" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />
+      <PackageReference Include="Npgsql" Version="5.0.7" />
+      <PackageReference Include="Sodium.Core" Version="1.2.3" />
     </ItemGroup>
 
     <ItemGroup>
+      <TypeScriptCompile Include="Scripts\login.ts" />
       <TypeScriptCompile Include="Scripts\main.ts" />
     </ItemGroup>
 

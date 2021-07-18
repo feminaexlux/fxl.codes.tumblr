@@ -1,5 +1,9 @@
+using fxl.codes.tumblr.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,6 +12,7 @@ namespace fxl.codes.tumblr
 {
     public class Startup
     {
+        private const string AuthenticationScheme = "fxl.codes.tumblr";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -19,8 +24,15 @@ namespace fxl.codes.tumblr
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews()
+            services.AddAuthentication(AuthenticationScheme)
+                .AddCookie(AuthenticationScheme, options =>
+                {
+                    options.LoginPath = "/Login";
+                });
+            services.AddControllersWithViews(configure => { configure.Filters.Add(new AuthorizeFilter()); })
                 .AddRazorRuntimeCompilation();
+
+            services.AddSingleton<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,7 +44,8 @@ namespace fxl.codes.tumblr
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}"); });
         }
     }

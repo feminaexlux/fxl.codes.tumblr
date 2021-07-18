@@ -1,0 +1,63 @@
+@model fxl.codes.tumblr.Entities.User
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" lang="en">
+        <title>Tumblr | Login</title>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:900i" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body class="mdc-typography">
+        <header class="mdc-top-app-bar mdc-top-app-bar--fixed" id="app-bar">
+            <div class="mdc-top-app-bar__row">
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <span class="mdc-top-app-bar__title">Tumblr | Login</span>
+                </section>
+            </div>
+        </header>
+
+        <section id="main-container" class="mdc-top-app-bar--fixed-adjust">
+            <main id="main-content">
+                @using (Html.BeginForm())
+                {
+                    <div class="mdc-card">
+                        <div class="mdc-card__content">
+                            <h5 class="mdc-typography--headline5">Login to Tumblr</h5>
+                            <label class="mdc-text-field mdc-text-field--filled mdc-text-field--with-leading-icon">
+                                <span class="mdc-text-field__ripple"></span>
+                                <span class="mdc-floating-label" id="username">Username</span>
+                                <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading" tabindex="0" role="button">person</i>
+                                @Html.TextBoxFor(user => user.Username, new { @class="mdc-text-field__input", type="text", aria_labelledby="username" })
+                                <span class="mdc-line-ripple"></span>
+                            </label>
+                            <label class="mdc-text-field mdc-text-field--filled mdc-text-field--with-leading-icon">
+                                <span class="mdc-text-field__ripple"></span>
+                                <span class="mdc-floating-label" id="password">Password</span>
+                                <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading" tabindex="1" role="button">password</i>
+                                @Html.PasswordFor(user => user.Password, new { @class="mdc-text-field__input", type="password", aria_labelledby="password" })
+                                <span class="mdc-line-ripple"></span>
+                            </label>
+                        </div>
+                        <div class="mdc-card__actions">
+                            <div class="mdc-card__action-buttons">
+                                <button class="mdc-button mdc-card__action mdc-card__action--button">
+                                    <span class="mdc-button__label">Login</span>
+                                    <div class="mdc-button__ripple"></div>
+                                </button>
+                                <button class="mdc-button mdc-card__action mdc-card__action--button">
+                                    <span class="mdc-button__label">Signup</span>
+                                    <div class="mdc-button__ripple"></div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </main>
+        </section>
+
+        <script src="js/login.js"></script>
+    </body>
+</html>

@@ -15,6 +15,6 @@
   },
   "dependencies": {
     "@types/jquery": "^3.5.5",
-    "material-components-web": "^11.0.0"
+    "material-components-web": "10.0.0"
   }
 }

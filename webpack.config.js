@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = [{
     mode: "development",
     entry: {
+        login: "./Scripts/login.ts",
         main: "./Scripts/main.ts",
         style: "./Styles/main.scss"
     },
@@ -38,8 +39,10 @@ module.exports = [{
                             // See https://github.com/webpack-contrib/sass-loader/issues/804
                             webpackImporter: false,
                             sassOptions: {
-                                includePaths: ['./node_modules']
-                            }
+                                includePaths: ['./node_modules'],
+                                sourceMap: true
+                            },
+                            sourceMap: true
                         },
                     },
                 ]

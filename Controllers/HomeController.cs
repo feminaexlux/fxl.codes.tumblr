@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace fxl.codes.tumblr.Controllers
 {
-    public class Home : Controller
+    public class HomeController : Controller
     {
         // GET
         public IActionResult Index()
