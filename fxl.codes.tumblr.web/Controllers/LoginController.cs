@@ -4,6 +4,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using fxl.codes.tumblr.Entities;
 using fxl.codes.tumblr.Services;
+using fxl.codes.tumblr.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -32,20 +33,32 @@ namespace fxl.codes.tumblr.Controllers
         [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> Index(User user)
         {
-            var valid = await _userService.Validate(user);
-            if (!valid)
+            User loggedIn;
+            try
+            {
+                loggedIn = await _userService.FindUser(user);
+                
+                var claims = new List<Claim>
+                {
+                    new(ClaimTypes.Name, loggedIn.Username),
+                    new(ClaimTypes.Role, "Member"),
+                    new(Constants.DisplayName, loggedIn.DisplayName)
+                };
+            
+                await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, Constants.AuthenticationScheme)));
+
+                return Redirect("/");
+            }
+            catch
             {
                 return NotFound("Invalid username or password");
             }
-            
-            var claims = new List<Claim>
-            {
-                new Claim("user", user.Username),
-                new Claim("role", "Member")
-            };
-            
-            await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, "Cookies", "user", "role")));
-
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(Constants.AuthenticationScheme);
             return Redirect("/");
         }
     }

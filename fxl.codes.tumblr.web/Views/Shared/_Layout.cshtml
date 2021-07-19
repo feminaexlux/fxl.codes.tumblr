@@ -1,8 +1,10 @@
+@using fxl.codes.tumblr.Utilities
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" lang="en">
-        <title>Tumblr | @ViewData["Title"]</title>
+        <title>@Constants.AppName | @ViewData["Title"]</title>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Roboto:900i" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
@@ -12,7 +14,28 @@
         <header class="mdc-top-app-bar mdc-top-app-bar--fixed" id="app-bar">
             <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                    <span class="mdc-top-app-bar__title">Tumblr | @ViewData["Title"]</span>
+                    <span class="mdc-top-app-bar__title">@Constants.AppName | @ViewData["Title"]</span>
+                </section>
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                    @Html.ActionLink("add_circle",
+                                            "AddTumblrAccount",
+                                            "Account",
+                                            "",
+                                            new
+                                            {
+                                                @class="material-icons mdc-top-app-bar__action-item mdc-icon-button",
+                                                aria_label="Add Tumblr Account"
+                                            })
+                    Welcome @Context.User.GetDisplayName()
+                    @Html.ActionLink("logout",
+                        "Logout",
+                        "Login",
+                        "",
+                        new
+                        {
+                            @class = "material-icons mdc-top-app-bar__action-item mdc-icon-button",
+                            aria_label = "Logout"
+                        })
                 </section>
             </div>
         </header>

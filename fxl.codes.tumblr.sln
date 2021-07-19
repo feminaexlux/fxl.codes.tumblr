@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fxl.codes.tumblr", "fxl.codes.tumblr.csproj", "{BDF4DEB9-9D66-4ADC-BB11-218F9231BCA9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fxl.codes.tumblr", "fxl.codes.tumblr.web\fxl.codes.tumblr.csproj", "{F50D5998-BBA6-4F57-81E3-7BC0C78F3CF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fxl.codes.tumblr.tests", "fxl.codes.tumblr.tests\fxl.codes.tumblr.tests.csproj", "{4DEA4629-A10C-4E45-B393-AB00357EAFB0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +10,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BDF4DEB9-9D66-4ADC-BB11-218F9231BCA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BDF4DEB9-9D66-4ADC-BB11-218F9231BCA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BDF4DEB9-9D66-4ADC-BB11-218F9231BCA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BDF4DEB9-9D66-4ADC-BB11-218F9231BCA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F50D5998-BBA6-4F57-81E3-7BC0C78F3CF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F50D5998-BBA6-4F57-81E3-7BC0C78F3CF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F50D5998-BBA6-4F57-81E3-7BC0C78F3CF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F50D5998-BBA6-4F57-81E3-7BC0C78F3CF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DEA4629-A10C-4E45-B393-AB00357EAFB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DEA4629-A10C-4E45-B393-AB00357EAFB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DEA4629-A10C-4E45-B393-AB00357EAFB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DEA4629-A10C-4E45-B393-AB00357EAFB0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

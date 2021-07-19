@@ -22,31 +22,28 @@ $fxl-orange: #ff6e40;
 @use "@material/top-app-bar/mdc-top-app-bar";
 @use "@material/typography/mdc-typography";
 
-html {
+html, body {
   height: 100vh;
   margin: 0;
-  
-  body {
-    height: 100vh;
-    margin: 0;
+}
 
-    @include icon-button.core-styles;
+body {
+  @include icon-button.core-styles;
 
-    main {
-      @include button-filled.styles;
-      @include icon.icon-core-styles;
-      @include textfield.core-styles;
+  main {
+    @include button-filled.styles;
+    @include icon.icon-core-styles;
+    @include textfield.core-styles;
+    
+    form {
+      @include card.core-styles;
       
-      form {
-        @include card.core-styles;
-        
-        margin: 16px auto;
-        width: 30vw;
-        
-        .mdc-card__content {
-          padding: 0 16px;
-        }
+      margin: 16px auto;
+      width: 30vw;
+      
+      .mdc-card__content {
+        padding: 0 16px;
       }
     }
-  }  
+  }
 }

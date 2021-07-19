@@ -1,6 +1,5 @@
 using fxl.codes.tumblr.Services;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using fxl.codes.tumblr.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -12,7 +11,6 @@ namespace fxl.codes.tumblr
 {
     public class Startup
     {
-        private const string AuthenticationScheme = "fxl.codes.tumblr";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,14 +22,12 @@ namespace fxl.codes.tumblr
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(AuthenticationScheme)
-                .AddCookie(AuthenticationScheme, options =>
-                {
-                    options.LoginPath = "/Login";
-                });
+            services.AddAuthentication(Constants.AuthenticationScheme)
+                .AddCookie(Constants.AuthenticationScheme, options => { options.LoginPath = "/Login"; });
             services.AddControllersWithViews(configure => { configure.Filters.Add(new AuthorizeFilter()); })
                 .AddRazorRuntimeCompilation();
 
+            services.AddSingleton<TumblrService>();
             services.AddSingleton<UserService>();
         }
 

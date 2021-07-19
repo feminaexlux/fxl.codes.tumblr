@@ -9,5 +9,7 @@ namespace fxl.codes.tumblr.Entities
         /// Hashed password stored in database
         /// </summary>
         public string Password { get; set; }
+        
+        public string DisplayName { get; set; }
     }
 }
