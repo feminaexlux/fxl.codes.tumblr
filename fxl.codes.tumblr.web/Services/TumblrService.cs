@@ -24,7 +24,7 @@ namespace fxl.codes.tumblr.web.Services
             _secret = tumblr["ConsumerSecret"];
         }
 
-        public string GetAuthorizationUrl()
+        internal OAuth1AuthorizationContext GetAuthorizationContext()
         {
             var request = OAuth1.BuildRequest(_requestUrl, _apiKey, _secret);
             var response = request.GetResponse();
@@ -35,7 +35,9 @@ namespace fxl.codes.tumblr.web.Services
 
             var oauthToken = tokenDictionary["oauth_token"];
 
-            return $"{_authorizeUrl}?oauth_token={oauthToken}";
+            return new OAuth1AuthorizationContext(tokenDictionary["oauth_token"],
+                tokenDictionary["oauth_token_secret"],
+                $"{_authorizeUrl}?oauth_token={oauthToken}");
         }
     }
 }

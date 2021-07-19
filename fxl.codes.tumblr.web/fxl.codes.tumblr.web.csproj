@@ -54,6 +54,8 @@
       <_ContentIncludedByDefault Remove="dist\package-lock.json" />
       <_ContentIncludedByDefault Remove="dist\package.json" />
       <_ContentIncludedByDefault Remove="dist\tsconfig.json" />
+      <_ContentIncludedByDefault Remove="dist\fxl.codes.tumblr.web.deps.json" />
+      <_ContentIncludedByDefault Remove="dist\fxl.codes.tumblr.web.runtimeconfig.json" />
     </ItemGroup>
 
 </Project>

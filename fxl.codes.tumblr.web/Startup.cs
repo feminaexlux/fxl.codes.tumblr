@@ -26,6 +26,8 @@ namespace fxl.codes.tumblr.web
                 .AddCookie(Constants.AuthenticationScheme, options => { options.LoginPath = "/Login"; });
             services.AddControllersWithViews(configure => { configure.Filters.Add(new AuthorizeFilter()); })
                 .AddRazorRuntimeCompilation();
+            
+            services.AddSession();
 
             services.AddSingleton<TumblrService>();
             services.AddSingleton<UserService>();

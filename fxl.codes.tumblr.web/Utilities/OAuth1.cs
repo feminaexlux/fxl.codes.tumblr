@@ -73,4 +73,18 @@ namespace fxl.codes.tumblr.web.Utilities
             return Convert.ToBase64String(signature);
         }
     }
+
+    internal class OAuth1AuthorizationContext
+    {
+        public readonly string Token;
+        public readonly string Secret;
+        public readonly string AuthorizationUrl;
+
+        public OAuth1AuthorizationContext(string token, string secret, string authorizationUrl)
+        {
+            Token = token;
+            Secret = secret;
+            AuthorizationUrl = authorizationUrl;
+        }
+    }
 }
