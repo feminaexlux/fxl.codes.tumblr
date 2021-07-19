@@ -390,3 +390,4 @@ FodyWeavers.xsd
 *.Development.json
 **/wwwroot/css/*
 **/wwwroot/js/*
+**/dist/*
