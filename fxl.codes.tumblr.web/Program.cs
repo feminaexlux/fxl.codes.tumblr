@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace fxl.codes.tumblr
+namespace fxl.codes.tumblr.web
 {
     public class Program
     {

@@ -1,19 +1,19 @@
 using System.IO;
 using System.Linq;
 using System.Text;
-using fxl.codes.tumblr.Utilities;
+using fxl.codes.tumblr.web.Utilities;
 using Microsoft.Extensions.Configuration;
 
-namespace fxl.codes.tumblr.Services
+namespace fxl.codes.tumblr.web.Services
 {
     public class TumblrService
     {
-        private readonly string _requestUrl;
-        private readonly string _authorizeUrl;
         private readonly string _accessUrl;
         private readonly string _apiKey;
+        private readonly string _authorizeUrl;
+        private readonly string _requestUrl;
         private readonly string _secret;
-        
+
         public TumblrService(IConfiguration configuration)
         {
             var tumblr = configuration.GetSection("Tumblr");

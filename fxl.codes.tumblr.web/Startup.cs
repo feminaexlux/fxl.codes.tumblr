@@ -1,5 +1,5 @@
-using fxl.codes.tumblr.Services;
-using fxl.codes.tumblr.Utilities;
+using fxl.codes.tumblr.web.Services;
+using fxl.codes.tumblr.web.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace fxl.codes.tumblr
+namespace fxl.codes.tumblr.web
 {
     public class Startup
     {

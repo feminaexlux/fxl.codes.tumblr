@@ -6,18 +6,19 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace fxl.codes.tumblr.Utilities
+namespace fxl.codes.tumblr.web.Utilities
 {
     public static class OAuth1
     {
         private const string EscapePattern = "[^A-Za-z0-9\\.\\-_~]";
+
         public static WebRequest BuildRequest(string requestUrl, string apiKey, string secret)
         {
             var nonce = Guid.NewGuid().ToString();
             var timestamp = DateTimeOffset.Now.ToUnixTimeSeconds().ToString();
             return BuildRequest("GET", requestUrl, apiKey, secret, nonce, timestamp);
         }
-        
+
         public static WebRequest BuildRequest(string method, string requestUrl, string apiKey, string secret, string nonce, string timestamp)
         {
             var dictionary = new Dictionary<string, string>
@@ -28,7 +29,7 @@ namespace fxl.codes.tumblr.Utilities
                 {"oauth_nonce", nonce},
                 {"oauth_version", "1.0"}
             };
-            
+
             var ordered = SignatureParts(dictionary);
             var parameters = ordered.Select(entry => $"{entry.Key}={entry.Value}").ToArray();
             var headers = dictionary.Select(entry => $"{entry.Key}=\"{entry.Value}\"").ToArray();
@@ -37,7 +38,7 @@ namespace fxl.codes.tumblr.Utilities
             var request = WebRequest.Create(new Uri(requestUrl));
             var signature = SignatureHash(secret, "", signatureBase);
             request.Headers["Authorization"] = $"OAuth {string.Join(",", headers)},oauth_signature=\"{signature}\"";
-            
+
             return request;
         }
 
@@ -45,7 +46,7 @@ namespace fxl.codes.tumblr.Utilities
         {
             return dictionary.OrderBy(entry => entry.Key, StringComparer.Ordinal).ToArray();
         }
-        
+
         public static string SignatureEncode(string input)
         {
             var matcher = new Regex(EscapePattern);
@@ -60,10 +61,7 @@ namespace fxl.codes.tumblr.Utilities
             }
 
             var clone = input + "";
-            foreach (var (key, value) in dictionary)
-            {
-                clone = clone.Replace(key.ToString(), value);
-            }
+            foreach (var (key, value) in dictionary) clone = clone.Replace(key.ToString(), value);
 
             return clone;
         }

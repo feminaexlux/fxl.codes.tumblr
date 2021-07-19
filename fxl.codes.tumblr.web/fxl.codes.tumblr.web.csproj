@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <CopyRazorGenerateFilesToPublishDirectory>true</CopyRazorGenerateFilesToPublishDirectory>
+        <AssemblyName>fxl.codes.tumblr.web</AssemblyName>
+        <RootNamespace>fxl.codes.tumblr.web</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\css" />
+      <Folder Include="wwwroot\lib" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Dapper" Version="2.0.90" />
+      <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.8" />
+      <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.7" />
+      <PackageReference Include="Npgsql" Version="5.0.7" />
+      <PackageReference Include="Sodium.Core" Version="1.2.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <TypeScriptCompile Include="Scripts\login.ts" />
+      <TypeScriptCompile Include="Scripts\main.ts" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Remove="dist\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="dist\Views\Account\Added.cshtml" />
+      <_ContentIncludedByDefault Remove="dist\Views\Home\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="dist\Views\Login\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="dist\Views\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="dist\web.config" />
+      <_ContentIncludedByDefault Remove="dist\appsettings.Development.json" />
+      <_ContentIncludedByDefault Remove="dist\appsettings.json" />
+      <_ContentIncludedByDefault Remove="dist\fxl.codes.tumblr.deps.json" />
+      <_ContentIncludedByDefault Remove="dist\fxl.codes.tumblr.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="dist\package-lock.json" />
+      <_ContentIncludedByDefault Remove="dist\package.json" />
+      <_ContentIncludedByDefault Remove="dist\tsconfig.json" />
+    </ItemGroup>
+
+</Project>

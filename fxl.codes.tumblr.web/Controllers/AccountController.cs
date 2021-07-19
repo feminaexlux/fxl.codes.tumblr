@@ -1,7 +1,7 @@
-using fxl.codes.tumblr.Services;
+using fxl.codes.tumblr.web.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace fxl.codes.tumblr.Controllers
+namespace fxl.codes.tumblr.web.Controllers
 {
     public class AccountController : Controller
     {
@@ -11,7 +11,7 @@ namespace fxl.codes.tumblr.Controllers
         {
             _tumblrService = tumblrService;
         }
-        
+
         public IActionResult AddTumblrAccount()
         {
             return Redirect(_tumblrService.GetAuthorizationUrl());

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fxl.codes.tumblr", "fxl.codes.tumblr.web\fxl.codes.tumblr.csproj", "{F50D5998-BBA6-4F57-81E3-7BC0C78F3CF9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fxl.codes.tumblr.web", "fxl.codes.tumblr.web\fxl.codes.tumblr.web.csproj", "{F50D5998-BBA6-4F57-81E3-7BC0C78F3CF9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fxl.codes.tumblr.tests", "fxl.codes.tumblr.tests\fxl.codes.tumblr.tests.csproj", "{4DEA4629-A10C-4E45-B393-AB00357EAFB0}"
 EndProject

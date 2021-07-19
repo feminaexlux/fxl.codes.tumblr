@@ -1,5 +1,4 @@
-@using fxl.codes.tumblr.Utilities
-
+@using fxl.codes.tumblr.web.Utilities
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,14 +17,14 @@
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
                     @Html.ActionLink("add_circle",
-                                            "AddTumblrAccount",
-                                            "Account",
-                                            "",
-                                            new
-                                            {
-                                                @class="material-icons mdc-top-app-bar__action-item mdc-icon-button",
-                                                aria_label="Add Tumblr Account"
-                                            })
+                        "AddTumblrAccount",
+                        "Account",
+                        "",
+                        new
+                        {
+                            @class = "material-icons mdc-top-app-bar__action-item mdc-icon-button",
+                            aria_label = "Add Tumblr Account"
+                        })
                     Welcome @Context.User.GetDisplayName()
                     @Html.ActionLink("logout",
                         "Logout",

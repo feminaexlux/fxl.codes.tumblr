@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using fxl.codes.tumblr.Entities;
-using fxl.codes.tumblr.Services;
-using fxl.codes.tumblr.Utilities;
+using fxl.codes.tumblr.web.Entities;
+using fxl.codes.tumblr.web.Services;
+using fxl.codes.tumblr.web.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace fxl.codes.tumblr.Controllers
+namespace fxl.codes.tumblr.web.Controllers
 {
     [AllowAnonymous]
     public class LoginController : Controller
@@ -37,14 +37,14 @@ namespace fxl.codes.tumblr.Controllers
             try
             {
                 loggedIn = await _userService.FindUser(user);
-                
+
                 var claims = new List<Claim>
                 {
                     new(ClaimTypes.Name, loggedIn.Username),
                     new(ClaimTypes.Role, "Member"),
                     new(Constants.DisplayName, loggedIn.DisplayName)
                 };
-            
+
                 await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, Constants.AuthenticationScheme)));
 
                 return Redirect("/");
@@ -54,7 +54,7 @@ namespace fxl.codes.tumblr.Controllers
                 return NotFound("Invalid username or password");
             }
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> Logout()
         {

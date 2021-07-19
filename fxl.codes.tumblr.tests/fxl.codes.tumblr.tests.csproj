@@ -13,7 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\fxl.codes.tumblr.web\fxl.codes.tumblr.csproj" />
+      <ProjectReference Include="..\fxl.codes.tumblr.web\fxl.codes.tumblr.web.csproj" />
     </ItemGroup>
 
 </Project>

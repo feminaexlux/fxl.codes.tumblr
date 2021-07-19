@@ -1,12 +1,12 @@
 using System.Security;
 using System.Threading.Tasks;
 using Dapper;
-using fxl.codes.tumblr.Entities;
+using fxl.codes.tumblr.web.Entities;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
 using Sodium;
 
-namespace fxl.codes.tumblr.Services
+namespace fxl.codes.tumblr.web.Services
 {
     public class UserService
     {

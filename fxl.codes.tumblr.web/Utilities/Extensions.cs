@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Security.Claims;
 
-namespace fxl.codes.tumblr.Utilities
+namespace fxl.codes.tumblr.web.Utilities
 {
     public static class Extensions
     {

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using fxl.codes.tumblr.Utilities;
+using fxl.codes.tumblr.web.Utilities;
 using NUnit.Framework;
 
 namespace fxl.codes.tumblr.tests

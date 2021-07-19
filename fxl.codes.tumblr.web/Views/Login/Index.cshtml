@@ -1,5 +1,5 @@
-@using fxl.codes.tumblr.Utilities
-@model fxl.codes.tumblr.Entities.User
+@using fxl.codes.tumblr.web.Utilities
+@model fxl.codes.tumblr.web.Entities.User
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,14 +31,14 @@
                                 <span class="mdc-text-field__ripple"></span>
                                 <span class="mdc-floating-label" id="username">Username</span>
                                 <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading" tabindex="0" role="button">person</i>
-                                @Html.TextBoxFor(user => user.Username, new { @class="mdc-text-field__input", type="text", aria_labelledby="username" })
+                                @Html.TextBoxFor(user => user.Username, new {@class = "mdc-text-field__input", type = "text", aria_labelledby = "username"})
                                 <span class="mdc-line-ripple"></span>
                             </label>
                             <label class="mdc-text-field mdc-text-field--filled mdc-text-field--with-leading-icon">
                                 <span class="mdc-text-field__ripple"></span>
                                 <span class="mdc-floating-label" id="password">Password</span>
                                 <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading" tabindex="1" role="button">password</i>
-                                @Html.PasswordFor(user => user.Password, new { @class="mdc-text-field__input", type="password", aria_labelledby="password" })
+                                @Html.PasswordFor(user => user.Password, new {@class = "mdc-text-field__input", type = "password", aria_labelledby = "password"})
                                 <span class="mdc-line-ripple"></span>
                             </label>
                         </div>
