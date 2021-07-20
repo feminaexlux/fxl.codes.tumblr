@@ -14,18 +14,10 @@
             <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                     <span class="mdc-top-app-bar__title">@Constants.AppName | @ViewData["Title"]</span>
+                    
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-                    @Html.ActionLink("add_circle",
-                        "AddTumblrAccount",
-                        "Account",
-                        "",
-                        new
-                        {
-                            @class = "material-icons mdc-top-app-bar__action-item mdc-icon-button",
-                            aria_label = "Add Tumblr Account"
-                        })
-                    Welcome @Context.User.GetDisplayName()
+                    Welcome @Context.User.AsAppUser().DisplayName
                     @Html.ActionLink("logout",
                         "Logout",
                         "Login",
@@ -83,6 +75,20 @@
                 @RenderBody()
             </main>
         </section>
+
+        <div class="mdc-dialog">
+            <div class="mdc-dialog__container">
+                <div class="mdc-dialog__surface"
+                     role="alertdialog"
+                     aria-modal="true"
+                     aria-labelledby="dialog-title"
+                     aria-describedby="dialog-content">
+                    <h2 class="mdc-dialog__title" id="dialog-title"></h2>
+                    <div class="mdc-dialog__content" id="dialog-content"></div>
+                </div>
+            </div>
+            <div class="mdc-dialog__scrim"></div>
+        </div>
 
         <script src="/js/main.js"></script>
     </body>

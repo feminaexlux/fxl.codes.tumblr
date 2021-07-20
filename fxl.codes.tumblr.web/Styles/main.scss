@@ -8,6 +8,7 @@ $fxl-orange: #ff6e40;
 
 @use "@material/button/button-filled";
 @use "@material/card";
+@use "@material/dialog";
 @use "@material/floating-label/mdc-floating-label";
 @use "@material/icon-button";
 @use "@material/line-ripple/mdc-line-ripple";
@@ -28,6 +29,7 @@ html, body {
 }
 
 body {
+  @include dialog.core-styles;
   @include icon-button.core-styles;
 
   main {

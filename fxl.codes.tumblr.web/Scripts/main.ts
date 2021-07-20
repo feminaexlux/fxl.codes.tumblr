@@ -8,20 +8,18 @@ declare global {
 }
 
 class Main {
-    tabElement: HTMLElement
     tab: MDCTabBar
-    topBarElement: HTMLElement
     topBar: MDCTopAppBar
     
     constructor() {
-        this.topBarElement = document.querySelector(".mdc-top-app-bar")
-        this.tabElement = document.querySelector(".mdc-tab-bar")
+        this.topBar = MDCTopAppBar.attachTo(document.querySelector(".mdc-top-app-bar"))
+        this.tab = MDCTabBar.attachTo(document.querySelector(".mdc-tab-bar"))
+        
         this.init();
     }
     
-    init() {
-        this.topBar = MDCTopAppBar.attachTo(this.topBarElement)
-        this.tab = MDCTabBar.attachTo(this.tabElement)
+    private init() {
+        
     }
 }
 

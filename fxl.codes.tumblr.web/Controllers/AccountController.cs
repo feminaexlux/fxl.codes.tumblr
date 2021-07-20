@@ -1,3 +1,4 @@
+using System.Net;
 using fxl.codes.tumblr.web.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,7 +14,15 @@ namespace fxl.codes.tumblr.web.Controllers
             _tumblrService = tumblrService;
         }
 
-        public IActionResult AddTumblrAccount()
+        [HttpPost]
+        [ProducesResponseType((int) HttpStatusCode.OK)]
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        public IActionResult AssociateTumblrAccount(string shortUrl)
+        {
+            return Ok();
+        }
+
+        public IActionResult VerifyTumblrAccount()
         {
             var authContext = _tumblrService.GetAuthorizationContext();
             // TODO find a better way to store these

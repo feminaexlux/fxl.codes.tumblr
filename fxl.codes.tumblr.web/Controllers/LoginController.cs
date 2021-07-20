@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -33,17 +32,10 @@ namespace fxl.codes.tumblr.web.Controllers
         [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> Index(User user)
         {
-            User loggedIn;
             try
             {
-                loggedIn = await _userService.FindUser(user);
-
-                var claims = new List<Claim>
-                {
-                    new(ClaimTypes.Name, loggedIn.Username),
-                    new(ClaimTypes.Role, "Member"),
-                    new(Constants.DisplayName, loggedIn.DisplayName)
-                };
+                var loggedIn = await _userService.FindUser(user);
+                var claims = loggedIn.AsClaims();
 
                 await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, Constants.AuthenticationScheme)));
 

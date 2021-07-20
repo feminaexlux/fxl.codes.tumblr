@@ -27,6 +27,7 @@ namespace fxl.codes.tumblr.web.Services
             var valid = PasswordHash.ScryptHashStringVerify(dbUser.Password, user.Password);
             if (!valid) throw new SecurityException("Incorrect password");
 
+            await connection.CloseAsync();
             return dbUser;
         }
     }
