@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -65,8 +66,7 @@ namespace fxl.codes.tumblr.web.Services
             await using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync();
 
-            var blogIds = connection.Query<int>("select blog from user_blog where user = @UserId", userId);
-            var blogs = connection.Query<Blog>("select * from blogs where id in (@Ids)", blogIds);
+            var blogs = connection.Query<Blog>("select b.* from blogs b join user_blog ub on ub.blog = b.id and ub.user = @User", new {User = userId});
             
             await connection.CloseAsync();
             return blogs;

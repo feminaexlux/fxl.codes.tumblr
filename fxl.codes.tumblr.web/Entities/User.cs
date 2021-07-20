@@ -17,7 +17,5 @@ namespace fxl.codes.tumblr.web.Entities
         public string Password { get; init; }
 
         public string DisplayName { get; init; }
-
-        public IEnumerable<Blog> Blogs { get; set; } = Array.Empty<Blog>();
     }
 }

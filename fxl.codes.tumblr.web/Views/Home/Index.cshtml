@@ -1,6 +1,9 @@
+@model IEnumerable<fxl.codes.tumblr.web.Entities.Blog>
+
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Home";
 }
 
 <h2>Home</h2>
+@Model.Count()
