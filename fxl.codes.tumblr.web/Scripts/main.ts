@@ -1,4 +1,3 @@
-import {MDCTabBar} from "@material/tab-bar"
 import {MDCTopAppBar} from "@material/top-app-bar";
 
 declare global {
@@ -8,12 +7,12 @@ declare global {
 }
 
 class Main {
-    tab: MDCTabBar
+    content: HTMLElement
     topBar: MDCTopAppBar
     
     constructor() {
+        this.content = document.querySelector("#main-content")
         this.topBar = MDCTopAppBar.attachTo(document.querySelector(".mdc-top-app-bar"))
-        this.tab = MDCTabBar.attachTo(document.querySelector(".mdc-tab-bar"))
         
         this.init();
     }

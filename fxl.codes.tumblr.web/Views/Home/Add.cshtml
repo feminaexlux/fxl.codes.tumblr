@@ -1,0 +1,35 @@
+@model fxl.codes.tumblr.web.Entities.Blog
+
+@{
+    ViewData["Title"] = "Add Tumblr Account";
+    Layout = "_Layout";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="mdc-card">
+        <div class="mdc-card__content">
+            <h5 class="mdc-typography--headline5">Add Tumblr Account</h5>
+            <label class="mdc-text-field mdc-text-field--filled mdc-text-field--with-leading-icon">
+                <span class="mdc-text-field__ripple"></span>
+                <span class="mdc-floating-label" id="username">Tumblr Username</span>
+                <i class="material-icons mdc-text-field__icon mdc-text-field__icon--leading" tabindex="0" role="button">person</i>
+                @Html.TextBoxFor(blog => blog.ShortUrl, new {@class = "mdc-text-field__input", type = "text", aria_labelledby = "username"})
+                <span class="mdc-line-ripple"></span>
+            </label>
+        </div>
+        <div class="mdc-card__actions">
+            <div class="mdc-card__action-buttons">
+                <button class="mdc-button mdc-card__action mdc-card__action--button">
+                    <span class="mdc-button__label">Add</span>
+                    <div class="mdc-button__ripple"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script src="~/js/home.js"></script>
+}

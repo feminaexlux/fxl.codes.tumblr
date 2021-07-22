@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,7 +6,6 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Dapper;
-using Dapper.Contrib.Extensions;
 using fxl.codes.tumblr.web.Entities;
 using fxl.codes.tumblr.web.Utilities;
 using Microsoft.Extensions.Configuration;
@@ -49,13 +47,14 @@ namespace fxl.codes.tumblr.web.Services
                 Json = json,
                 ShortUrl = tumblrBlogInfo.Response.Blog.Name,
                 Title = tumblrBlogInfo.Response.Blog.Title,
-                Uuid = tumblrBlogInfo.Response.Blog.Uuid
+                TumblrUuid = tumblrBlogInfo.Response.Blog.Uuid
             };
             
             await using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync();
 
-            await connection.InsertAsync(blog);
+            var blogId = connection.QueryFirst<int>(@"insert into blogs (tumblr_uuid, title, short_url, json) values (@TumblrUuid, @Title, @ShortUrl, @Json) returning id", blog);
+            await connection.ExecuteAsync("insert into user_blog (\"user\", blog) values (@User, @Blog)", new {User = userId, Blog = blogId});
             
             await connection.CloseAsync();
             return blog;

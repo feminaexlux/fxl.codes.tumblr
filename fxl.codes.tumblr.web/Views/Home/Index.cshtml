@@ -1,9 +1,55 @@
-@model IEnumerable<fxl.codes.tumblr.web.Entities.Blog>
+@model fxl.codes.tumblr.web.Entities.Blog
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "Home";
+    ViewData["Title"] = Model.Title;
 }
 
-<h2>Home</h2>
-@Model.Count()
+@section additionalActions
+{
+    @Html.ActionLink("add", "Add", "Home", "", new{ @class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" })
+}
+
+<div class="mdc-tab-bar" role="tablist">
+    <div class="mdc-tab-scroller">
+        <div class="mdc-tab-scroller__scroll-area">
+            <div class="mdc-tab-scroller__scroll-content">
+                <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+                    <span class="mdc-tab__content">
+                        <span class="mdc-tab__icon material-icons" aria-hidden="true">article</span>
+                        <span class="mdc-tab__text-label">Posts</span>
+                    </span>
+                    <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                </button>
+                <button class="mdc-tab" role="tab" aria-selected="false" tabindex="1">
+                    <span class="mdc-tab__content">
+                        <span class="mdc-tab__icon material-icons" aria-hidden="true">queue</span>
+                        <span class="mdc-tab__text-label">Queued</span>
+                    </span>
+                    <span class="mdc-tab-indicator">
+                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                </button>
+                <button class="mdc-tab" role="tab" aria-selected="false" tabindex="1">
+                    <span class="mdc-tab__content">
+                        <span class="mdc-tab__icon material-icons" aria-hidden="true">schedule</span>
+                        <span class="mdc-tab__text-label">Schedule New</span>
+                    </span>
+                    <span class="mdc-tab-indicator">
+                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                    </span>
+                    <span class="mdc-tab__ripple"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/js/home.js"></script>
+}

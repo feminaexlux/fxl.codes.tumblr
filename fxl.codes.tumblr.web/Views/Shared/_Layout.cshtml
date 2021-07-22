@@ -13,10 +13,11 @@
         <header class="mdc-top-app-bar mdc-top-app-bar--fixed" id="app-bar">
             <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <a href="/" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">home</a>
                     <span class="mdc-top-app-bar__title">@Constants.AppName | @ViewData["Title"]</span>
-                    
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                    @await RenderSectionAsync("additionalActions", false)
                     Welcome @Context.User.AsAppUser().DisplayName
                     @Html.ActionLink("logout",
                         "Logout",
@@ -32,45 +33,6 @@
         </header>
 
         <section id="main-container" class="mdc-top-app-bar--fixed-adjust">
-            <div class="mdc-tab-bar" role="tablist">
-                <div class="mdc-tab-scroller">
-                    <div class="mdc-tab-scroller__scroll-area">
-                        <div class="mdc-tab-scroller__scroll-content">
-                            <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
-                                <span class="mdc-tab__content">
-                                    <span class="mdc-tab__icon material-icons" aria-hidden="true">article</span>
-                                    <span class="mdc-tab__text-label">Posts</span>
-                                </span>
-                                <span class="mdc-tab-indicator mdc-tab-indicator--active">
-                                    <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                </span>
-                                <span class="mdc-tab__ripple"></span>
-                            </button>
-                            <button class="mdc-tab" role="tab" aria-selected="false" tabindex="1">
-                                <span class="mdc-tab__content">
-                                    <span class="mdc-tab__icon material-icons" aria-hidden="true">queue</span>
-                                    <span class="mdc-tab__text-label">Queued</span>
-                                </span>
-                                <span class="mdc-tab-indicator">
-                                    <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                </span>
-                                <span class="mdc-tab__ripple"></span>
-                            </button>
-                            <button class="mdc-tab" role="tab" aria-selected="false" tabindex="1">
-                                <span class="mdc-tab__content">
-                                    <span class="mdc-tab__icon material-icons" aria-hidden="true">schedule</span>
-                                    <span class="mdc-tab__text-label">Schedule New</span>
-                                </span>
-                                <span class="mdc-tab-indicator">
-                                    <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                                </span>
-                                <span class="mdc-tab__ripple"></span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <main id="main-content">
                 @RenderBody()
             </main>
@@ -91,5 +53,6 @@
         </div>
 
         <script src="/js/main.js"></script>
+        @await RenderSectionAsync("scripts", false)
     </body>
 </html>

@@ -1,5 +1,8 @@
 using System.Net;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 using fxl.codes.tumblr.web.Services;
+using fxl.codes.tumblr.web.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +20,19 @@ namespace fxl.codes.tumblr.web.Controllers
         [HttpPost]
         [ProducesResponseType((int) HttpStatusCode.OK)]
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        public IActionResult AssociateTumblrAccount(string shortUrl)
+        public async Task<IActionResult> AssociateTumblrAccount(string shortUrl)
         {
-            return Ok();
+            var user = User.AsAppUser();
+            var encoded = HtmlEncoder.Default.Encode(shortUrl);
+            try
+            {
+                var blog = await _tumblrService.AddBlog(encoded, user.Id);
+                return Ok(blog);
+            }
+            catch
+            {
+                return NotFound(encoded);
+            }
         }
 
         public IActionResult VerifyTumblrAccount()

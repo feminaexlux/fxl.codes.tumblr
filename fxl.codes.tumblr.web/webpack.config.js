@@ -3,6 +3,7 @@ const path = require('path');
 module.exports = [{
     mode: "development",
     entry: {
+        home: "./Scripts/home.ts",
         login: "./Scripts/login.ts",
         main: "./Scripts/main.ts",
         style: "./Styles/main.scss"
