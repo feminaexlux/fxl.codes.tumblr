@@ -22,12 +22,13 @@ namespace fxl.codes.tumblr.web.Services
             await using var connection = new NpgsqlConnection(_configuration.GetConnectionString("tumblr"));
             await connection.OpenAsync();
 
-            var dbUser = connection.QuerySingle<User>("select * from users where username = @Username", user);
+            var dbUser = connection.QuerySingle<User>("select * from users where users.username = @Username", user);
+            await connection.CloseAsync();
+            
             // User password is coming in unencrypted
             var valid = PasswordHash.ScryptHashStringVerify(dbUser.Password, user.Password);
             if (!valid) throw new SecurityException("Incorrect password");
-
-            await connection.CloseAsync();
+            
             return dbUser;
         }
     }

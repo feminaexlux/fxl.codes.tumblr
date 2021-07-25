@@ -1,55 +1,90 @@
-@model fxl.codes.tumblr.web.Entities.Blog
+@model fxl.codes.tumblr.web.ViewModels.BlogViewModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AuthoringTagHelpers
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = Model.CurrentBlog.Title;
 }
 
 @section additionalActions
 {
-    @Html.ActionLink("add", "Add", "Home", "", new{ @class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button" })
+    <a asp-controller="Home" asp-action="Add" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button">add</a>
+    <button id="account-changer" class="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button mdc-menu-surface--anchor">
+        workspaces
+        <div class="mdc-menu mdc-menu-surface">
+            <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical" tabindex="-1">
+                @foreach (var blog in Model.AllBlogs)
+                {
+                    <li class="mdc-list-item@(blog.Id == Model.CurrentBlog.Id ? " mdc-list-item--disabled" : "")" role="menuitem" data-blog="@blog.Id">
+                        <span class="mdc-list-item__ripple"></span>
+                        <span class="mdc-list-item__text">@blog.Title</span>
+                    </li>
+                }
+            </ul>
+        </div>
+    </button>
 }
 
-<div class="mdc-tab-bar" role="tablist">
-    <div class="mdc-tab-scroller">
-        <div class="mdc-tab-scroller__scroll-area">
-            <div class="mdc-tab-scroller__scroll-content">
-                <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
-                    <span class="mdc-tab__content">
-                        <span class="mdc-tab__icon material-icons" aria-hidden="true">article</span>
-                        <span class="mdc-tab__text-label">Posts</span>
-                    </span>
-                    <span class="mdc-tab-indicator mdc-tab-indicator--active">
-                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                    </span>
-                    <span class="mdc-tab__ripple"></span>
-                </button>
-                <button class="mdc-tab" role="tab" aria-selected="false" tabindex="1">
-                    <span class="mdc-tab__content">
-                        <span class="mdc-tab__icon material-icons" aria-hidden="true">queue</span>
-                        <span class="mdc-tab__text-label">Queued</span>
-                    </span>
-                    <span class="mdc-tab-indicator">
-                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                    </span>
-                    <span class="mdc-tab__ripple"></span>
-                </button>
-                <button class="mdc-tab" role="tab" aria-selected="false" tabindex="1">
-                    <span class="mdc-tab__content">
-                        <span class="mdc-tab__icon material-icons" aria-hidden="true">schedule</span>
-                        <span class="mdc-tab__text-label">Schedule New</span>
-                    </span>
-                    <span class="mdc-tab-indicator">
-                        <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
-                    </span>
-                    <span class="mdc-tab__ripple"></span>
-                </button>
+@section tabBar
+{
+    <div class="mdc-tab-bar" role="tablist">
+        <div class="mdc-tab-scroller">
+            <div class="mdc-tab-scroller__scroll-area">
+                <div class="mdc-tab-scroller__scroll-content">
+                    <button class="mdc-tab mdc-tab--active" role="tab" aria-selected="true" tabindex="0">
+                        <span class="mdc-tab__content">
+                            <span class="mdc-tab__icon material-icons" aria-hidden="true">article</span>
+                            <span class="mdc-tab__text-label">Posts</span>
+                        </span>
+                        <span class="mdc-tab-indicator mdc-tab-indicator--active">
+                            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                        </span>
+                        <span class="mdc-tab__ripple"></span>
+                    </button>
+                    <button class="mdc-tab" role="tab" aria-selected="false" tabindex="1">
+                        <span class="mdc-tab__content">
+                            <span class="mdc-tab__icon material-icons" aria-hidden="true">queue</span>
+                            <span class="mdc-tab__text-label">Queued</span>
+                        </span>
+                        <span class="mdc-tab-indicator">
+                            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                        </span>
+                        <span class="mdc-tab__ripple"></span>
+                    </button>
+                    <button class="mdc-tab" role="tab" aria-selected="false" tabindex="2">
+                        <span class="mdc-tab__content">
+                            <span class="mdc-tab__icon material-icons" aria-hidden="true">schedule</span>
+                            <span class="mdc-tab__text-label">Schedule New</span>
+                        </span>
+                        <span class="mdc-tab-indicator">
+                            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+                        </span>
+                        <span class="mdc-tab__ripple"></span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}
+
+<section id="blog-content">
+    <div role="progressbar" class="mdc-linear-progress" aria-label="Loading content" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0">
+        <div class="mdc-linear-progress__buffer">
+            <div class="mdc-linear-progress__buffer-bar"></div>
+            <div class="mdc-linear-progress__buffer-dots"></div>
+        </div>
+        <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+            <span class="mdc-linear-progress__bar-inner"></span>
+        </div>
+        <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+            <span class="mdc-linear-progress__bar-inner"></span>
+        </div>
+    </div>
+</section>
 
 @section scripts
 {
     <script src="~/js/home.js"></script>
+    <script defer>document.tumblrApp.home.getPosts(@Model.CurrentBlog.Id)</script>
 }

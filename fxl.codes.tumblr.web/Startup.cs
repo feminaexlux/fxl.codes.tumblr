@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Npgsql.Logging;
 
 namespace fxl.codes.tumblr.web
 {
@@ -36,7 +37,12 @@ namespace fxl.codes.tumblr.web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+                NpgsqlLogManager.Provider = new ConsoleLoggingProvider(NpgsqlLogLevel.Trace);
+                NpgsqlLogManager.IsParameterLoggingEnabled = true;
+            }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -45,6 +51,8 @@ namespace fxl.codes.tumblr.web
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}"); });
+
+            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
         }
     }
 }

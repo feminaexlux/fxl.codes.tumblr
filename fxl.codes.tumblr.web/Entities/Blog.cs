@@ -1,3 +1,5 @@
+using System;
+
 namespace fxl.codes.tumblr.web.Entities
 {
     public class Blog
@@ -9,6 +11,7 @@ namespace fxl.codes.tumblr.web.Entities
         public string Avatar { get; set; }
         public string AvatarMime { get; set; }
         public string Json { get; set; }
+        public DateTime? LastUpdated { get; set; }
 
         public string GetAvatarBase64()
         {

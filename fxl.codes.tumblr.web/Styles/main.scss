@@ -1,4 +1,4 @@
-$fxl-gray: #616161;
+$fxl-gray: #263238;
 $fxl-orange: #ff6e40;
 
 @use "@material/theme" with (
@@ -12,15 +12,21 @@ $fxl-orange: #ff6e40;
 @use "@material/floating-label/mdc-floating-label";
 @use "@material/icon-button";
 @use "@material/line-ripple/mdc-line-ripple";
+@use "@material/linear-progress";
+@use "@material/list/mdc-list";
+@use "@material/menu-surface/mdc-menu-surface";
+@use "@material/menu/mdc-menu";
 @use "@material/notched-outline/mdc-notched-outline";
 @use "@material/ripple";
 @use "@material/tab-bar/mdc-tab-bar";
 @use "@material/tab-scroller/mdc-tab-scroller";
 @use "@material/tab-indicator/mdc-tab-indicator";
 @use "@material/tab/mdc-tab";
+@use "@material/tab/mixins" as mdc-tab-mixin;
 @use "@material/textfield";
 @use "@material/textfield/icon";
 @use "@material/top-app-bar/mdc-top-app-bar";
+@use "@material/top-app-bar/mixins" as mdc-top-app-bar-mixins;
 @use "@material/typography/mdc-typography";
 
 html, body {
@@ -31,10 +37,26 @@ html, body {
 body {
   @include dialog.core-styles;
   @include icon-button.core-styles;
+  
+  header {
+    .mdc-tab {
+      height: 64px;
+    }
+    
+    .top-app-bar-override {
+      background-color: #fff;
+    }
+  }
+
+  .mdc-top-app-bar--fixed-adjust {
+    padding-top: 128px;
+  }
 
   main {
     @include button-filled.styles;
+    @include card.core-styles;
     @include icon.icon-core-styles;
+    @include linear-progress.core-styles;
     @include textfield.core-styles;
     
     form {

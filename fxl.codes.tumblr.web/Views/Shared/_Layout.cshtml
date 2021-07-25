@@ -1,4 +1,7 @@
 @using fxl.codes.tumblr.web.Utilities
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, AuthoringTagHelpers
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -19,16 +22,11 @@
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
                     @await RenderSectionAsync("additionalActions", false)
                     Welcome @Context.User.AsAppUser().DisplayName
-                    @Html.ActionLink("logout",
-                        "Logout",
-                        "Login",
-                        "",
-                        new
-                        {
-                            @class = "material-icons mdc-top-app-bar__action-item mdc-icon-button",
-                            aria_label = "Logout"
-                        })
+                    <a asp-controller="Login" asp-action="Logout" class="material-icons mdc-top-app-bar__action-item mdc-icon-button" aria-label="Logout">logout</a>
                 </section>
+            </div>
+            <div class="mdc-top-app-bar__row top-app-bar-override">
+                @await RenderSectionAsync("tabBar", false)
             </div>
         </header>
 

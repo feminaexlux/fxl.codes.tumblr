@@ -8,10 +8,10 @@ namespace fxl.codes.tumblr.web.Entities
     public class TumblrBlogContainer
     {
         public TumblrMeta Meta { get; set; }
-        public TumblrBlogInfo Response { get; set; }
+        public TumblrBlogResponse Response { get; set; }
     }
 
-    public class TumblrBlogInfo
+    public class TumblrBlogResponse
     {
         public TumblrBlog Blog { get; set; }
     }

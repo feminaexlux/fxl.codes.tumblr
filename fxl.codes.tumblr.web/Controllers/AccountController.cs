@@ -37,11 +37,12 @@ namespace fxl.codes.tumblr.web.Controllers
 
         public IActionResult VerifyTumblrAccount()
         {
-            var authContext = _tumblrService.GetAuthorizationContext();
-            // TODO find a better way to store these
-            HttpContext.Session.SetString("token", authContext.Token);
-            HttpContext.Session.SetString("secret", authContext.Secret);
-            return Redirect(authContext.AuthorizationUrl);
+            // var authContext = _tumblrService.GetAuthorizationContext();
+            // // TODO find a better way to store these
+            // HttpContext.Session.SetString("token", authContext.Token);
+            // HttpContext.Session.SetString("secret", authContext.Secret);
+            // return Redirect(authContext.AuthorizationUrl);
+            return Ok();
         }
 
         public IActionResult Added()
