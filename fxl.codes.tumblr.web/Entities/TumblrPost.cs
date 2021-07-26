@@ -11,10 +11,22 @@ namespace fxl.codes.tumblr.web.Entities
         public TumblrPostResponse Response { get; set; }
     }
 
-    public class TumblrPostResponse
+    public class TumblrPostResponse : TumblrBlogResponse
     {
-        public TumblrBlog Blog { get; set; }
         public IEnumerable<TumblrPost> Posts { get; set; }
+        public int Total_Posts { get; set; }
+        public TumblrPostResponseLinks _Links { get; set; }
+    }
+
+    public class TumblrPostResponseLinks
+    {
+        public TumblrPostResponseLinkNext Next { get; set; }
+    }
+
+    public class TumblrPostResponseLinkNext
+    {
+        public string Href { get; set; }
+        public string Method { get; set; }
     }
 
     public class TumblrPost

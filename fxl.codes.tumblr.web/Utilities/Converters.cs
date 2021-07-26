@@ -17,4 +17,17 @@ namespace fxl.codes.tumblr.web.Utilities
             writer.WriteNumberValue((value - DateTime.UnixEpoch).TotalSeconds);
         }
     }
+
+    public class LongValueConverter : JsonConverter<long>
+    {
+        public override long Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return reader.GetInt64();
+        }
+
+        public override void Write(Utf8JsonWriter writer, long value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.ToString());
+        }
+    }
 }

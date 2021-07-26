@@ -28,23 +28,6 @@ class Main {
             .then(response => { return response.json() })
             .then(results => { return results as T[] })
     }
-    
-    public buildElement(tag: string, classes: string[] = [], attributes: {[key: string]: string} = {}, text: string = ""): HTMLElement {
-        let element = document.createElement(tag);
-        classes.forEach(cssClass => {
-            element.classList.add(cssClass)
-        })
-
-        for (let key of Object.keys(attributes)) {
-            let attribute = document.createAttribute(key)
-            attribute.value = attributes[key]
-            element.attributes.setNamedItem(attribute)
-        }
-        
-        element.textContent = text
-        
-        return element
-    }
 }
 
 document.tumblrApp = new Main()

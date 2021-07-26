@@ -8,6 +8,7 @@ $fxl-orange: #ff6e40;
 
 @use "@material/button/button-filled";
 @use "@material/card";
+@use "@material/chips/mdc-chips";
 @use "@material/dialog";
 @use "@material/floating-label/mdc-floating-label";
 @use "@material/icon-button";
@@ -38,6 +39,8 @@ body {
   @include dialog.core-styles;
   @include icon-button.core-styles;
   
+  background-color: #bdbdbd;
+  
   header {
     .mdc-tab {
       height: 64px;
@@ -67,6 +70,34 @@ body {
       
       .mdc-card__content {
         padding: 0 16px;
+      }
+    }
+    
+    .mdc-card {
+      margin: 16px;
+      
+      a.mdc-card__primary-action {
+        flex-direction: row;
+        line-height: 48px;
+        
+        .card-date {
+          flex-grow: 1;
+          font-size: smaller;
+          font-weight: 200;
+          padding-right: 16px;
+          text-align: right;
+        }
+        
+        .card-title {
+          font-size: larger;
+          font-weight: 500;
+        }
+      }
+      
+      .mdc-card__content {
+        max-height: 400px;
+        overflow: auto;
+        padding: 16px;
       }
     }
   }

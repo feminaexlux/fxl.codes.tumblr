@@ -15,7 +15,7 @@ namespace fxl.codes.tumblr.web.Utilities
         private readonly string _requestUrl;
         private readonly string _authorizeUrl;
         private readonly string _accessUrl;
-        private const string Prefix = "https://api.tumblr.com/v2";
+        private const string Prefix = "https://api.tumblr.com";
 
         public TumblrApi(IConfiguration configuration)
         {
@@ -42,7 +42,7 @@ namespace fxl.codes.tumblr.web.Utilities
         {
             var request = OAuth1.BuildRequest(_requestUrl, _apiKey, _secret);
             var response = request.GetResponse();
-            using var reader = new StreamReader(response.GetResponseStream(), Encoding.ASCII);
+            using var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
             var tokens = reader.ReadToEnd();
             var tokenDictionary = tokens.Split("&")
                 .ToDictionary(x => x.Split("=")[0], x => x.Split("=")[1]);
@@ -53,16 +53,22 @@ namespace fxl.codes.tumblr.web.Utilities
                 tokenDictionary["oauth_token_secret"],
                 $"{_authorizeUrl}?oauth_token={oauthToken}");
         }
-        
-        private string BlogInfo(string blog) => $"{Prefix}/blog/{blog}/info?api_key={_apiKey}";
-        private string BlogPosts(string blog, int limit) => $"{Prefix}/blog/{blog}/posts?api_key={_apiKey}&notes_info=true&npf=true&limit={limit}";
 
-        private static async Task<string> GetJson(string url)
+        public async Task<string> GetNext(string url)
+        {
+            return await GetJson($"{Prefix}/{url}{(url.Contains("?") ? "&" : "?")}api_key={_apiKey}");
+        }
+
+        public static async Task<string> GetJson(string url)
         {
             var request = WebRequest.Create(url);
             var response = await request.GetResponseAsync();
-            using var reader = new StreamReader(response.GetResponseStream(), Encoding.ASCII);
+            using var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
             return await reader.ReadToEndAsync();
         }
+
+        private string BlogInfo(string blog) => $"{Prefix}/v2/blog/{blog}/info?api_key={_apiKey}";
+
+        private string BlogPosts(string blog, int limit) => $"{Prefix}/v2/blog/{blog}/posts?api_key={_apiKey}&notes_info=true&npf=true&limit={limit}";
     }
 }

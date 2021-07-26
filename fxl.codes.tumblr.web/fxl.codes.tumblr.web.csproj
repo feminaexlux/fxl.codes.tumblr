@@ -22,6 +22,7 @@
 
     <ItemGroup>
       <TypeScriptCompile Include="Scripts\entities.ts" />
+      <TypeScriptCompile Include="Scripts\helpers.ts" />
       <TypeScriptCompile Include="Scripts\home.ts" />
       <TypeScriptCompile Include="Scripts\login.ts" />
       <TypeScriptCompile Include="Scripts\main.ts" />

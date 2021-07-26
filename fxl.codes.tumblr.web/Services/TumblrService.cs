@@ -13,7 +13,6 @@ namespace fxl.codes.tumblr.web.Services
 {
     public class TumblrService
     {
-        internal static readonly JsonSerializerOptions DefaultJsonOptions = new(JsonSerializerDefaults.Web);
         private readonly string _connectionString;
         private readonly TumblrApi _tumblrApi;
 
@@ -26,11 +25,11 @@ namespace fxl.codes.tumblr.web.Services
         internal async Task<Blog> AddBlog(string shortUrl, int userId)
         {
             var json = await _tumblrApi.GetBlogInfoJson(new Blog {ShortUrl = shortUrl});
-            var container = JsonSerializer.Deserialize<TumblrBlogContainer>(json, DefaultJsonOptions);
+            var container = json.DeserializeTo<TumblrBlogContainer>();
 
             var blog = new Blog
             {
-                Json = JsonSerializer.Serialize(container.Response.Blog, DefaultJsonOptions),
+                Json = container.Response.Blog.Serialize(),
                 ShortUrl = container.Response.Blog.Name,
                 Title = container.Response.Blog.Title,
                 TumblrUuid = container.Response.Blog.Uuid
@@ -70,25 +69,26 @@ namespace fxl.codes.tumblr.web.Services
             if (!posts.Any() || !blog.LastUpdated.HasValue || forceUpdate)
             {
                 var postsJson = await _tumblrApi.GetBlogPostsJson(blog, limit);
-                var container = JsonSerializer.Deserialize<TumblrPostContainer>(postsJson, DefaultJsonOptions);
+                var container = postsJson.DeserializeTo<TumblrPostContainer>();
 
                 blog.Title = container.Response.Blog.Title;
                 blog.ShortUrl = container.Response.Blog.Name;
                 blog.LastUpdated = DateTime.UtcNow;
-                blog.Json = JsonSerializer.Serialize(container.Response.Blog, DefaultJsonOptions);
+                blog.Json = container.Response.Blog.Serialize();
 
                 await connection.ExecuteAsync("update blogs set title=@Title, short_url=@ShortUrl, last_updated=@LastUpdated where id=@Id", blog);
                 await connection.ExecuteAsync("delete from posts where blog_id=@Id", blog);
 
-                posts = container.Response.Posts.Select(x => new Post
+                posts = container.Response.Posts.Select(x => x.ToPost(blog));
+                var next = container.Response._Links?.Next?.Href;
+                
+                while (!string.IsNullOrEmpty(next))
                 {
-                    Blog = blog.Id,
-                    Slug = x.Slug,
-                    Summary = x.Summary,
-                    Timestamp = x.Timestamp,
-                    TumblrId = x.Id,
-                    Json = JsonSerializer.Serialize(x, DefaultJsonOptions)
-                });
+                    var additionalJson = await _tumblrApi.GetNext(next);
+                    var nextContainer = additionalJson.DeserializeTo<TumblrPostContainer>();
+                    posts = posts.Union(nextContainer.Response.Posts.Select(x => x.ToPost(blog)));
+                    next = nextContainer.Response._Links?.Next?.Href;
+                }
 
                 await connection.ExecuteAsync("insert into posts (blog_id, tumblr_id, slug, summary, json, \"timestamp\") values (@Blog, @TumblrId, @Slug, @Summary, @Json, @Timestamp)", posts);
             }

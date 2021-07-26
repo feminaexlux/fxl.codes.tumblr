@@ -46,7 +46,7 @@ namespace fxl.codes.tumblr.web.Controllers
         public async Task<IActionResult> GetPosts(int blogId)
         {
             var posts = await _tumblrService.GetPosts(blogId);
-            return Json(posts.OrderByDescending(x => x.Timestamp), TumblrService.DefaultJsonOptions);
+            return Json(posts.OrderByDescending(x => x.Timestamp), Extensions.DefaultJsonOptions);
         }
     }
 }
