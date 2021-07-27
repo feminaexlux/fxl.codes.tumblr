@@ -49,11 +49,12 @@ export class HomePage {
         if (switcher) {
             switcher.addEventListener("click", () => {
                 this.menu.open = !this.menu.open
-            })    
+            })
         }
 
         if (this.menu) {
             this.menu.listen(ListConstants.ACTION_EVENT, (event: CustomEvent) => {
+                debugger
                 this.menu.open = false
                 let detail = event.detail as {index: number}
                 let item = this.menu.items[detail.index]
@@ -85,16 +86,18 @@ export class HomePage {
     private buildCard(post: BlogPost): HTMLElement {
         let link = `https://${post.parent.shortUrl}.tumblr.com/post/${post.tumblrId}/${post.slug}`
         let header = post.content.content.find(x => x.subType && x.subType.indexOf("heading") >= 0)?.text ?? ""
-        let component = new ElementBuilder("div", ["mdc-card"]).setChildren(
-            new ElementBuilder("a", ["mdc-card__primary-action"], {"href": link, "target": "tumblr"}).setChildren(
-                new ElementBuilder("i",
-                    ["material-icons", "mdc-icon-button"],
-                    {"href": link},
-                    "link"),
-                new ElementBuilder("span", ["card-title"]).setText(header),
-                new ElementBuilder("span", ["card-date"]).setText(post.timestamp.toLocaleString())
-            ),
-            new ElementBuilder("div", ["mdc-card__content"]).setChildren(...this.buildBlocks(post.content.content)),
+        
+        let component = ElementBuilder.getInstance("div").addClass("mdc-card").setChildren(
+            ElementBuilder.getInstance("a")
+                .addClass("mdc-card__primary-action")
+                .addAttribute("href", link)
+                .addAttribute("target", "tumblr")
+                .setChildren(
+                    ElementBuilder.getInstance("i").addClass("material-icons", "mdc-icon-button").setText("link"),
+                    ElementBuilder.getInstance("span").addClass("card-title").setText(header),
+                    ElementBuilder.getInstance("span").addClass("card-date").setText(post.timestamp.toLocaleString())
+                ),
+            ElementBuilder.getInstance("div").addClass("mdc-card__content").setChildren(...this.buildBlocks(post.content.content)),
             this.buildTags(post.content.tags)
         )
         
@@ -107,7 +110,7 @@ export class HomePage {
         content.forEach(block => {
             let builder: ElementBuilder
             if (!block.subType || block.subType.indexOf("heading") < 0) {
-                builder = new ElementBuilder("p")
+                builder = ElementBuilder.getInstance("p")
                 builder.setText(block.text)
                 blocks.push(builder)
             }
@@ -120,18 +123,20 @@ export class HomePage {
         let chips: ElementBuilder[] = [] 
             
         tags.forEach(tag => {
-            chips.push(new ElementBuilder("div", ["mdc-chip"], {"role": "row"}).setChildren(
-                new ElementBuilder("div", ["mdc-chip__ripple"]),
-                new ElementBuilder("i", ["material-icons", "mdc-chip__icon", "mdc-chip__icon--leading"]).setText("tag"),
-                new ElementBuilder("span").setAttributes({"role": "gridcell"}).setChildren(
-                    new ElementBuilder("span", ["mdc-chip__primary-action"]).setChildren(
-                        new ElementBuilder("span", ["mdc-chip__text"]).setText(tag)
+            chips.push(
+                ElementBuilder.getInstance("div").addClass("mdc-chip").addAttribute("role", "row").setChildren(
+                    ElementBuilder.getInstance("div").addClass("mdc-chip__ripple"),
+                    ElementBuilder.getInstance("i").addClass("material-icons", "mdc-chip__icon", "mdc-chip__icon--leading").setText("tag"),
+                    ElementBuilder.getInstance("span").addAttribute("role", "gridcell").setChildren(
+                        ElementBuilder.getInstance("span").addClass("mdc-chip__primary-action").setChildren(
+                            ElementBuilder.getInstance("span").addClass("mdc-chip__text").setText(tag)
+                        )
                     )
                 )
-            ))
+            )
         })
         
-        return new ElementBuilder("div", ["mdc-chip-set"], {"role": "grid"}).setChildren(...chips)
+        return ElementBuilder.getInstance("div").addClass("mdc-chip-set").addAttribute("role", "grid").setChildren(...chips)
     }
 }
 

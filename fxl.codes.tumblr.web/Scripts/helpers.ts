@@ -1,20 +1,25 @@
 export class ElementBuilder {
     tag: string
-    classes: string[]
-    attributes: {[key: string]: string}
+    classes: string[] = []
+    attributes: {[key: string]: string} = {}
     text: string
     children: ElementBuilder[] = []
     
-    constructor(tag: string, classes: string[] = [], attributes: {[key: string]: string} = {}, text = "", children: ElementBuilder[] = []) {
+    private constructor(tag: string) {
         this.tag = tag
-        this.classes = classes
-        this.attributes = attributes
-        this.text = text
-        this.children = children
     }
     
-    public setAttributes(attributes: {[key: string]: string}): ElementBuilder {
-        this.attributes = attributes
+    public static getInstance(tag: string): ElementBuilder {
+        return new ElementBuilder(tag)
+    }
+    
+    public addClass(...className: string[]): ElementBuilder {
+        this.classes.push(...className)
+        return this
+    }
+    
+    public addAttribute(key: string, value: string): ElementBuilder {
+        this.attributes[key] = value
         return this
     }
     

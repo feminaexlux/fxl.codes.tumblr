@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Dapper;
 using fxl.codes.tumblr.web.Entities;
@@ -58,7 +58,7 @@ namespace fxl.codes.tumblr.web.Services
             return blogs;
         }
 
-        internal async Task<IEnumerable<Post>> GetPosts(int blogId, int limit = 200, bool forceUpdate = false)
+        internal async Task<IEnumerable<Post>> GetPosts(int blogId, int limit = 200)
         {
             await using var connection = new NpgsqlConnection(_connectionString);
             await connection.OpenAsync();
@@ -66,39 +66,60 @@ namespace fxl.codes.tumblr.web.Services
             var blog = connection.QuerySingle<Blog>("select * from blogs where id = @Id", new {Id = blogId});
             var posts = await connection.QueryAsync<Post>("select * from posts where blog_id = @Id", new {Id = blogId});
 
-            if (!posts.Any() || !blog.LastUpdated.HasValue || forceUpdate)
+            if (!posts.Any() || !blog.LastUpdated.HasValue)
             {
-                var postsJson = await _tumblrApi.GetBlogPostsJson(blog, limit);
-                var container = postsJson.DeserializeTo<TumblrPostContainer>();
-
-                blog.Title = container.Response.Blog.Title;
-                blog.ShortUrl = container.Response.Blog.Name;
-                blog.LastUpdated = DateTime.UtcNow;
-                blog.Json = container.Response.Blog.Serialize();
-
-                await connection.ExecuteAsync("update blogs set title=@Title, short_url=@ShortUrl, last_updated=@LastUpdated where id=@Id", blog);
-                await connection.ExecuteAsync("delete from posts where blog_id=@Id", blog);
-
-                posts = container.Response.Posts.Select(x => x.ToPost(blog));
-                var next = container.Response._Links?.Next?.Href;
-                
-                while (!string.IsNullOrEmpty(next))
-                {
-                    var additionalJson = await _tumblrApi.GetNext(next);
-                    var nextContainer = additionalJson.DeserializeTo<TumblrPostContainer>();
-                    posts = posts.Union(nextContainer.Response.Posts.Select(x => x.ToPost(blog)));
-                    next = nextContainer.Response._Links?.Next?.Href;
-                }
-
-                await connection.ExecuteAsync("insert into posts (blog_id, tumblr_id, slug, summary, json, \"timestamp\") values (@Blog, @TumblrId, @Slug, @Summary, @Json, @Timestamp)", posts);
+                posts = await GetAllPosts(connection, blog, limit);
+            }
+            else if (blog.LastUpdated?.Date < DateTime.UtcNow.Date)
+            {
             }
 
-            foreach (var post in posts)
-            {
-                post.Parent = blog;
-            }
+            var updatedPosts = posts.ToArray();
+            foreach (var post in updatedPosts) post.Parent = blog;
 
             await connection.CloseAsync();
+            return updatedPosts;
+        }
+
+        internal async Task<IEnumerable<Post>> GetPostsByTag(int blogId, string tag)
+        {
+            await using var connection = new NpgsqlConnection(_connectionString);
+            await connection.OpenAsync();
+
+            var posts = connection.Query<Post>("select url, \"timestamp\", summary from posts where blog_id=@Blog and json like @Tag",
+                new {Blog = blogId, Tag = $"%{tag}%"});
+
+            await connection.CloseAsync();
+
+            return posts;
+        }
+
+        private async Task<IEnumerable<Post>> GetAllPosts(IDbConnection connection, Blog blog, int limit)
+        {
+            var postsJson = await _tumblrApi.GetBlogPostsJson(blog, limit);
+            var container = postsJson.DeserializeTo<TumblrPostContainer>();
+
+            blog.Title = container.Response.Blog.Title;
+            blog.ShortUrl = container.Response.Blog.Name;
+            blog.LastUpdated = DateTime.UtcNow;
+            blog.Json = container.Response.Blog.Serialize();
+
+            await connection.ExecuteAsync("update blogs set title=@Title, short_url=@ShortUrl, last_updated=@LastUpdated where id=@Id", blog);
+            await connection.ExecuteAsync("delete from posts where blog_id=@Id", blog);
+
+            var posts = container.Response.Posts.Select(x => x.ToPost(blog));
+            var next = container.Response._Links?.Next?.Href;
+
+            while (!string.IsNullOrEmpty(next))
+            {
+                var additionalJson = await _tumblrApi.GetNext(next);
+                var nextContainer = additionalJson.DeserializeTo<TumblrPostContainer>();
+                posts = posts.Union(nextContainer.Response.Posts.Select(x => x.ToPost(blog)));
+                next = nextContainer.Response._Links?.Next?.Href;
+            }
+
+            await connection.ExecuteAsync("insert into posts (blog_id, tumblr_id, slug, summary, json, \"timestamp\", url) "
+                                          + "values (@Blog, @TumblrId, @Slug, @Summary, @Json, @Timestamp, @Url)", posts);
             return posts;
         }
     }

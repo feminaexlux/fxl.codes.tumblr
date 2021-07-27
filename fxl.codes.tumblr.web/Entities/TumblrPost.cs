@@ -38,6 +38,7 @@ namespace fxl.codes.tumblr.web.Entities
         public DateTime Timestamp { get; set; }
 
         public string Summary { get; set; }
+        public string Post_Url { get; set; }
         public IEnumerable<string> Tags { get; set; }
         public IEnumerable<TumblrPostContent> Content { get; set; }
     }

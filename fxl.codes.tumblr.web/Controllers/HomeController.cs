@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using fxl.codes.tumblr.web.Entities;
 using fxl.codes.tumblr.web.Services;
 using fxl.codes.tumblr.web.Utilities;
 using fxl.codes.tumblr.web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace fxl.codes.tumblr.web.Controllers
@@ -47,6 +50,25 @@ namespace fxl.codes.tumblr.web.Controllers
         {
             var posts = await _tumblrService.GetPosts(blogId);
             return Json(posts.OrderByDescending(x => x.Timestamp), Extensions.DefaultJsonOptions);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> SimpleList(int blogId, string tag = null)
+        {
+            IEnumerable<SimplePost> simplified;
+            if (string.IsNullOrEmpty(tag))
+            {
+                var posts = await _tumblrService.GetPosts(blogId);
+                simplified = posts.Cast<SimplePost>().ToArray();
+            }
+            else
+            {
+                var posts = await _tumblrService.GetPostsByTag(blogId, tag);
+                simplified = posts.Cast<SimplePost>().ToArray();
+            }
+
+            return Json(simplified.OrderBy(x => x.Timestamp), Extensions.DefaultJsonOptions);
         }
     }
 }

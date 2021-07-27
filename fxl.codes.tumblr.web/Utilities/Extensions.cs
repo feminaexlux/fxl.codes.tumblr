@@ -53,7 +53,8 @@ namespace fxl.codes.tumblr.web.Utilities
                 Summary = tumblrPost.Summary,
                 Timestamp = tumblrPost.Timestamp,
                 TumblrId = tumblrPost.Id,
-                Json = tumblrPost.Serialize()
+                Json = tumblrPost.Serialize(),
+                Url = tumblrPost.Post_Url
             };
         }
     }
