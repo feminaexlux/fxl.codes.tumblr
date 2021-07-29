@@ -44,6 +44,8 @@ namespace fxl.codes.tumblr.web
                 NpgsqlLogManager.IsParameterLoggingEnabled = true;
             }
 
+            app.UsePathBase(Configuration["PathBase"]);
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
