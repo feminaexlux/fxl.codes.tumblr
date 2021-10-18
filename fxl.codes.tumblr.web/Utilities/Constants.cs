@@ -4,6 +4,5 @@ namespace fxl.codes.tumblr.web.Utilities
     {
         public const string AppName = "TumblrApp";
         internal const string AuthenticationScheme = "fxl.codes.tumblr.web";
-        internal const string DisplayName = "displayName";
     }
 }

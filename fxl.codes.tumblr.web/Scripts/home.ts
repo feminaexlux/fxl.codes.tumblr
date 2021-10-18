@@ -54,12 +54,11 @@ export class HomePage {
 
         if (this.menu) {
             this.menu.listen(ListConstants.ACTION_EVENT, (event: CustomEvent) => {
-                debugger
                 this.menu.open = false
                 let detail = event.detail as {index: number}
                 let item = this.menu.items[detail.index]
                 let id = item.attributes.getNamedItem("data-blog").value
-                document.location.href = `/Home/Index/${id}`
+                document.location.href = `/tumblr/Home/Index/${id}`
             })    
         }
     }

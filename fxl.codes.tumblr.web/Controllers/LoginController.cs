@@ -37,14 +37,14 @@ namespace fxl.codes.tumblr.web.Controllers
 
             await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, Constants.AuthenticationScheme)));
 
-            return Redirect("/");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(Constants.AuthenticationScheme);
-            return Redirect("/");
+            return RedirectToAction("Index");
         }
     }
 }

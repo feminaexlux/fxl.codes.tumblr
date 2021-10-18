@@ -1,6 +1,12 @@
 @using fxl.codes.tumblr.web.Utilities
+@using Microsoft.Extensions.Configuration
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, AuthoringTagHelpers
+
+@{
+    var configuration = Context.RequestServices.GetService(typeof(IConfiguration)) as IConfiguration;
+    var pathBase = configuration?["PathBase"] ?? "/tumblr";
+}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,6 +57,7 @@
         </div>
 
         <script src="~/js/main.js"></script>
+        <script>document.tumblrApp.init("@pathBase")</script>
         @await RenderSectionAsync("scripts", false)
     </body>
 </html>
