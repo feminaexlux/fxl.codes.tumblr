@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <Folder Include="wwwroot\css" />
-      <Folder Include="wwwroot\lib" />
     </ItemGroup>
 
     <ItemGroup>
@@ -43,6 +42,21 @@
 
     <ItemGroup>
       <Content Remove="dist\**" />
+      <Content Update="wwwroot\js\home.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="wwwroot\js\login.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="wwwroot\js\main.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="wwwroot\js\style.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="wwwroot\css\main.css">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
