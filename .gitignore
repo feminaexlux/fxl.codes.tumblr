@@ -387,7 +387,6 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 
-*.Development.json
-**/wwwroot/css/*
-**/wwwroot/js/*
+**/*.Development.json
+**/*.Release.json
 **/dist/*
