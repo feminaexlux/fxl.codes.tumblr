@@ -1,7 +1,9 @@
+using Dapper;
 using fxl.codes.tumblr.web.Services;
 using fxl.codes.tumblr.web.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +29,7 @@ namespace fxl.codes.tumblr.web
                 .AddCookie(Constants.AuthenticationScheme, options => { options.LoginPath = "/Login"; });
             services.AddControllersWithViews(configure => { configure.Filters.Add(new AuthorizeFilter()); })
                 .AddRazorRuntimeCompilation();
-            
+
             services.AddSession();
 
             services.AddSingleton<TumblrService>();
@@ -49,12 +51,17 @@ namespace fxl.codes.tumblr.web
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}"); });
 
-            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+            DefaultTypeMap.MatchNamesWithUnderscores = true;
         }
     }
 }

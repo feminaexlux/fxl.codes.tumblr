@@ -32,19 +32,12 @@ namespace fxl.codes.tumblr.web.Controllers
         [ProducesResponseType((int) HttpStatusCode.OK)]
         public async Task<IActionResult> Index(User user)
         {
-            try
-            {
-                var loggedIn = await _userService.FindUser(user);
-                var claims = loggedIn.AsClaims();
+            var loggedIn = await _userService.FindUser(user);
+            var claims = loggedIn.AsClaims();
 
-                await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, Constants.AuthenticationScheme)));
+            await HttpContext.SignInAsync(new ClaimsPrincipal(new ClaimsIdentity(claims, Constants.AuthenticationScheme)));
 
-                return Redirect("/");
-            }
-            catch
-            {
-                return NotFound("Invalid username or password");
-            }
+            return Redirect("/");
         }
 
         [HttpGet]
